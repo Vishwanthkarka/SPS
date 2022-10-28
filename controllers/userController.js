@@ -8,8 +8,16 @@ const { sendMail } = require('../utils/emailUtils');
 const crypto = require('crypto');
 
 module.exports.signup = BigPromise(async (req, res) => {
-  const { email, name, password } = req.body;
-console.log(req.body)
+  const { email,
+     name, 
+     password, 
+    parentName,
+    parentEmail,
+    parentPhone, 
+    section,
+    studentPhone 
+   } = req.body;
+console.log("@@@@@@@@@",req.body)
   if(!(email && name && password)) {
     console.log("Email, name and password are mandatory")
     throw new CustomError("Email, name and password are mandatory", 400);
@@ -20,9 +28,12 @@ console.log(req.body)
     console.log("collage email")
     throw new CustomError("Please enter Collage email id", 400);
   }
+console.log(req.files.photo);
   let result;
   if(req.files) {
-    let file = req.files.photo;
+    let file = req.files.photo
+    console.log(file);
+    
     if(!file) {
       throw new CustomError("Please provide the files", 400);
     }
@@ -40,8 +51,14 @@ console.log(req.body)
     photo: {
       id: result?.public_id,
       secure_url: result?.secure_url
-    }
-  });
+    },
+    parentName,
+    parentEmail,
+    parentPhone, 
+    section,
+    studentPhone,
+    
+  })
 
   return cookieToken(user, res);
 });
@@ -78,6 +95,8 @@ module.exports.logout = BigPromise((req, res)=>{
   });
 });
 
+
+//forgot password
 module.exports.forgotPassword = BigPromise(async (req, res) => {
   const { email } = req.body;
   if(!email) {

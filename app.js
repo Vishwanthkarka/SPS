@@ -16,7 +16,7 @@ const passport = require('passport')
 
 
 // Import all routes
-const homeRoutes = require('./routes/home');
+// const homeRoutes = require('./routes/home');
 const userRoutes = require('./routes/user');
 const Permission = require('./routes/permission');
 
@@ -53,15 +53,16 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //Morgan middleware
 app.use(morgan('tiny'))
 
-app.use('/api/v1', homeRoutes);
+// app.use('/api/v1', homeRoutes);
 app.use('/api/v1', userRoutes);
 app.use('/api/v1',Permission);
 
 // app.get('/signup', (req, res) => res.render('signup'));
 app.get('/password/reset/:token', (req, res) => res.render('passwordReset', {token: req.params.token}));
 app.set("view engine", "ejs");
+
 app.use("/google",home );
-// app.use(passport.initialize() );
+app.use(passport.initialize() );
 
 
 app.use('*',(req,res)=> {

@@ -57,8 +57,11 @@ module.exports.getAllPermission = BigPromise(async (req, res) => {
 });
 
 module.exports.getOnePermission = BigPromise(async (req, res) => {
-  const product = await Product.findById(req.params.productId);
-
+  res.send("hello123")
+  
+  console.log("hoss,,s")
+  const product = await Product.findById(req.params.id);
+res.send("hello")
   if (!product) {
     throw new CustomError("Product not found", 404);
   }
@@ -69,6 +72,30 @@ module.exports.getOnePermission = BigPromise(async (req, res) => {
   });
 });
 
+exports.getOneProduct = BigPromise(async (req, res) => {
+  res.send("fjjjf")
+  // const product = await Permission.findById(req.params.id);
+
+  // if (!product) {
+  //   return next(new CustomError("No product found with this id", 401));
+  // }
+  res.status(200).json({
+    success: true,
+    // product,
+  });
+});
+
+module.exports.userPermission = BigPromise(async(req,res)=> {
+  const perm = await Product.findById(req.params.productId);
+  if (!product) {
+    throw new CustomError("No Permission", 404);
+  }
+  res.status(200).json({
+    
+    success: true,
+    perm,
+  });
+})
 
 module.exports.Permssion_comment = BigPromise(async (req, res) => {
   const { permissionId } = req.params;

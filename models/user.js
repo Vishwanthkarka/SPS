@@ -22,34 +22,32 @@ const userSchema = mongoose.Schema({
     minLength: [6, "Password should be atleast 6 char"],
     select: false,
   },
-  
-isVerifed:{
-  type:Boolean,
-  default:false
 
+  isVerifed: {
+    type: Boolean,
+    default: false,
   },
   role: {
     type: String,
     default: "user",
   },
-  htno:{
-type:String,
-
-  },
-  section:{
-    type:String,
-//  required:true
-  },
-  googleId:{
+  htno: {
     type: String,
-    
   },
-  year:{
-    type:Number,
+  section: {
+    type: String,
+    //  required:true
   },
-  isLoginWithGoogle:{
-    type:Boolean,
-    default:false
+  googleId: {
+    type: String,
+  },
+  year: {
+    type: Number,
+  },
+
+  isLoginWithGoogle: {
+    type: Boolean,
+    default: false,
   },
   photo: {
     id: {
@@ -61,8 +59,26 @@ type:String,
       // required: true,
       validate: [validator.isURL, "Please enter a valid url"],
     },
-    
   },
+    parentEmail: {
+      type: String,
+      validate: [validator.isEmail, "Please enter email in correct format"],
+    },
+
+    studentPhone: {
+      type: Number,
+    },
+    parentPhone: {
+      type: Number,
+    },
+    section: {
+      type: String,
+    },
+    parentName: {
+      type: String,
+      maxLength: [40, "Name should be under 40 characters"],
+    },
+  
   forgotPasswordToken: String,
   forgotPasswordExpiry: Date,
   createdAt: {

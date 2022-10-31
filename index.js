@@ -3,6 +3,7 @@ const app = require("./app");
 const connectDB = require('./config/db');
 const path = require('path')
 const cloudinary = require('cloudinary');
+const bodyParser = require('body-parser');
 
 // Database connection
 connectDB();

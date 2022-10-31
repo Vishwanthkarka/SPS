@@ -1,6 +1,8 @@
 const passport = require('passport')
 const User = require("../models/user")
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+
+
 passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
@@ -30,9 +32,12 @@ User.findOne({email:profile._json.email})
                 googleId:profile.id,
                 email: profile._json.email,
                 isLoginWithGoogle:true,
-                isVerifed:true,
+                isVerifed:profile.email_verified,
+                secure_url:profile.picture
+                
             }).then(user => {
                 console.log("New User", user)
+                console.log(profile)
                 next(null,user)
             })
             .catch(err => console.log(err))
@@ -40,6 +45,6 @@ User.findOne({email:profile._json.email})
        
     }
 )
-next()
+// next()
 }
 ))

@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const permissionSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please provide product name"],
-    trim: true,
-    maxlength: [120, "Product name should be not more than 120 charactres"],
-  },
+  // name: {
+  //   type: String,
+  //   required: [true, "Please provide product name"],
+  //   trim: true,
+  //   maxlength: [120, "Product name should be not more than 120 charactres"],
+  // },
   subject: {
     type: String,
     required: [true, "Please provide subject"],
@@ -29,19 +30,25 @@ const permissionSchema = new mongoose.Schema({
   type:Number,
 
   },
-  category: {
+  email:{
     type: String,
-    required: [
-      true,
-      "Please provide product category (HEALTH, PROGRAMS, HACKATHON , EVENTS)",
-    ],
-    enum: {
-      values: ["HEALTH", "PROGRAMS", "HACKATHON" , "EVENTS" ],
-      message:
-        "Please provide product category only from: SHORT_SLEEVES, LONG_SLEEVES, SWEAT_SHIRTS and HOODIES",
-    },
-    trim: true,
+   
+    validate: [validator.isEmail, "Please enter email in correct format"],
+
   },
+  // category: {
+  //   type: String,
+  //   required: [
+  //     true,
+  //     "Please provide product category (HEALTH, PROGRAMS, HACKATHON , EVENTS)",
+  //   ],
+  //   enum: {
+  //     values: ["HEALTH", "PROGRAMS", "HACKATHON" , "EVENTS" ],
+  //     message:
+  //       "Please provide product category only from: SHORT_SLEEVES, LONG_SLEEVES, SWEAT_SHIRTS and HOODIES",
+  //   },
+  //   trim: true,
+  // },
   reviews: [
     {
       user: {

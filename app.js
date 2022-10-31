@@ -10,7 +10,7 @@ const app = express();
 const home = require("./routes/home")
 var cors = require('cors')
 const cookieSession = require("cookie-session");
-
+// const Sign = require("./views/signup.ejs")
 require("./controllers/passport")
 const passport = require('passport')
 
@@ -19,6 +19,7 @@ const passport = require('passport')
 // const homeRoutes = require('./routes/home');
 const userRoutes = require('./routes/user');
 const Permission = require('./routes/permission');
+// const { signup } = require('./controllers/userController');
 
 app.use(
   cookieSession({
@@ -36,9 +37,12 @@ app.use(express.urlencoded({ extended: true}));
 app.use(cors());
 // Temp check
 app.use(express.static(path.join(__dirname,'./student-permission/build')))
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
+// app.use("/si",Sign)
 
-
+app.get("/si", (req, res) => {
+  res.render("signup");
+});
 // Cookies and file middlewares
 app.use(cookieParser());
 app.use(fileUpload({

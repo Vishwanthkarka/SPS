@@ -15,7 +15,8 @@ module.exports.signup = BigPromise(async (req, res) => {
     parentEmail,
     parentPhone, 
     section,
-    studentPhone 
+    studentPhone,
+    image
    } = req.body;
 console.log("@@@@@@@@@",req.body)
   if(!(email && name && password)) {
@@ -28,29 +29,57 @@ console.log("@@@@@@@@@",req.body)
     console.log("collage email")
     throw new CustomError("Please enter Collage email id", 400);
   }
-console.log(req.files.photo);
-  let result;
-  if(req.files) {
-    let file = req.files.photo
-    console.log(file);
+  
+console.log(image);
+  // let result;
+  // if(image) {
+  //   let file = image
+  //   console.log(file)
+  //   if(!file) {
+  //     throw new CustomError("Please provide the files", 400);
+  //   }
+  //   result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+  //     folder: 'users',
+  //     width: 150,
+  //     crop: 'scale'
+  //   });
+  // }
+
+  // const user = await User.create({
+  //   name,
+  //   email,
+  //   password,
+  //   photo: {
+  //     id: result?.public_id,
+  //     secure_url: result?.secure_url
+  //   },
+  //   parentName,
+  //   parentEmail,
+  //   parentPhone, 
+  //   section,
+  //   studentPhone,
     
-    if(!file) {
-      throw new CustomError("Please provide the files", 400);
-    }
-    result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-      folder: 'users',
-      width: 150,
-      crop: 'scale'
-    });
-  }
+  // })
+
+
+
+
+  let file = req.files.photo;
+console.log(file)
+  const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+    folder: "users",
+    width: 150,
+    crop: "scale",
+  });
+
 
   const user = await User.create({
     name,
     email,
     password,
     photo: {
-      id: result?.public_id,
-      secure_url: result?.secure_url
+      id: result.public_id,
+      secure_url: result.secure_url,
     },
     parentName,
     parentEmail,
@@ -58,7 +87,7 @@ console.log(req.files.photo);
     section,
     studentPhone,
     
-  })
+  });
 
   return cookieToken(user, res);
 });

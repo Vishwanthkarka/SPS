@@ -9,7 +9,7 @@ router.route("/allpermission").get(isLoggedIn,getAllPermission)
 // router.route("/product/:id").get(getOneProduct);
 router.route("/permission/:id").get((req,res,next)=> {res.send("hello")})
 // router.route("/product").get(getOneProduct);
-router.route("/user/permission/:id").get(userPermission) 
+router.route("/user/permission/:id").get(isLoggedIn,userPermission) 
 // app.get('/password/reset/:token', (req, res) => res.render('passwordReset', {token: req.params.token}));
 
 module.exports = router;

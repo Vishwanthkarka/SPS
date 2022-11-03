@@ -3,8 +3,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const YAML = require('yamljs');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = YAML.load('./swagger.yaml');
+
 const path = require('path')
 const app = express();
 const home = require("./routes/home")
@@ -24,7 +23,8 @@ const Permission = require('./routes/permission');
 app.use(
   cookieSession({
     maxAge: 3 * 24 * 60 * 60 * 1000,
-    keys: [process.env.JWT_SECRET], // dotenv
+    keys: [process.env.JWT_SECRET],
+   // dotenv
   })
 );
 
@@ -50,8 +50,6 @@ app.use(fileUpload({
   tempFileDir: 'tmp/'
 }));
 
-//Swagger middleware
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 //Morgan middleware

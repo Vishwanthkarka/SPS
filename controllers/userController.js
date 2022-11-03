@@ -113,6 +113,7 @@ module.exports.login = BigPromise(async (req, res) => {
   return cookieToken(user, res);
 });
 
+
 module.exports.logout = BigPromise((req, res)=>{
   res.cookie('token', null, {
     expires: new Date(Date.now()),

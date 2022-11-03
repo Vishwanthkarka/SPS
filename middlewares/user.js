@@ -2,19 +2,34 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BigPromise = require('./bigPromise');
 const CustomError = require('../utils/customError');
+const store = require("store2");
 
 module.exports.isLoggedIn = BigPromise(async (req, res, next)=>{
-  const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
-  
+  // req.cookies.token || 
+  const token =  req.header('Authorization')?.replace('Bearer ', '');
+  console.log(token)
+  let email = req.header('email')
+  let role = req.header('role')
+  console.log("&&&&&",email,role)
+
   if(!token) {
     throw new CustomError("Unauthorized", 401);
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+  if(email == decoded.email && role == decoded.role){
+ 
+ 
+console.log("DDD+++",decoded)
   req.user = await User.findById(decoded.id);
 
   next();
+}
+else{
+  
+    throw new CustomError("Unauthorized", 401);
+
+}
 
 });
 

@@ -6,7 +6,7 @@ const WhereClause = require("../utils/whereClause");
 exports.addPermission = BigPromise(async (req, res, next) => {
   const permission = await Permission.create(req.body);
   
-  res.status(200).json({
+ return  res.status(200).json({
     status: true,
     permission,
     user: req.user._id,
@@ -14,26 +14,6 @@ exports.addPermission = BigPromise(async (req, res, next) => {
   });
 });
 
-// exports.getAllPermission = BigPromise(async (req, res, next) => {
-//   const resultPerPage = 6;
-//   const totalCountProduct = await Permission.countDocuments(); 
-//   const permissionObj = new WhereClause(Permission.find(), req.query)
-//     .search()
-//     .filter();
-//   let permissions = await permissionObj.base;
-//   const filteredProductNumber = permissions.length;
-
-//   // permission.limit().skip()
-//   permissionObj.pager(resultPerPage);
-//   permissions = await permissions.base;
-//   res.status(200).json({
-//     status: true,
-//     permissions,
-//     // permissionObj,
-//     filteredProductNumber,
-//     totalCountProduct,
-//   });
-// });
 
 module.exports.getAllPermission = BigPromise(async (req, res) => {
   const resultPerPage = 6;
@@ -47,7 +27,7 @@ module.exports.getAllPermission = BigPromise(async (req, res) => {
 
   const filteredProductCount = products.length;
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     products,
     filteredProductCount,
@@ -55,31 +35,16 @@ module.exports.getAllPermission = BigPromise(async (req, res) => {
   });
 });
 
-// module.exports.getOnePermission = BigPromise(async (req, res) => {
-//   res.send("hello123")
-//   console.log("hoss,,s")
-//   const product = await Product.findById(req.params.id);
-// res.send(product)
-//   if (!product) {
-//     throw new CustomError("Product not found", 404);
-//   }
-
-//   res.status(200).json({
-//     success: true,
-//     product,
-//   });
-// });
-
 
 
 module.exports.userPermission = BigPromise(async(req,res)=> {
-  const permissionData = await Permission.find({"name":req.params.id});
+  const permissionData = await Permission.find({"email":req.params.id});
   console.log(req.params.id)
   // res.send(req.params.id)
   if (!permissionData) {
     throw new CustomError("No Permission", 404);
   }
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     permissionData,
   });
